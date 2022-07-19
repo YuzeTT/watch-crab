@@ -15,8 +15,6 @@ const formValue = ref(
   {
     twitter: {
       id: 'joebiden',
-      name: 'Joe Biden',
-      avatar: 'https://pbs.twimg.com/profile_images/839109349838982656/5QM0o_Ql_400x400.jpg',
       followers: null,
       isShowName: false,
       getTime: 5
@@ -71,9 +69,9 @@ const open = () => {
   <title-bar />
   <div class="column">
     <div class="container">
-      <n-card title="平台配置" style="margin-bottom: 15px">
-        <n-tabs default-value="Twitter" type="segment" animated>
-          <n-tab-pane name="Twitter" tab="Twitter">
+      <n-tabs default-value="Twitter" type="segment" animated>
+        <n-tab-pane name="Twitter" tab="Twitter">
+          <n-card title="平台配置" style="margin-bottom: 15px">
             <div style="display: flex;align-items: center;">
               <n-tag :color="{ color: '#fff' }" :bordered="false" size="large" style="min-width: 70px;margin-right: 10px;">
                 Twitter ID
@@ -95,10 +93,6 @@ const open = () => {
               </n-input-number>
             </div>
             <div style="margin-top: 10px;">
-              <!-- <n-tag :color="{ color: '#fff' }" :bordered="false" size="large" style="margin-right: 10px;">
-                显示名称（需要连接VPN）
-              </n-tag>
-              <n-switch v-model:value="formValue.twitter.isShowName" /> -->
               <n-checkbox v-model:checked="formValue.twitter.isShowName">
                 显示名称（需要连接VPN）
               </n-checkbox>
@@ -115,24 +109,21 @@ const open = () => {
                 </n-gi>
               </n-grid>
             </div>
-            <!-- <pre>{{ JSON.stringify(formValue, null, 2) }}</pre> -->
-          </n-tab-pane>
-          <n-tab-pane name="Bilibili" tab="Bilibili">
-            开发中...
-          </n-tab-pane>
-        </n-tabs>
-      </n-card>
-      <n-card title="测试结果" style="margin-bottom: 15px">
-        <n-statistic label="粉丝数">
-          {{ formValue.twitter.followers?formValue.twitter.followers:'未测试' }}
-          <template #suffix v-if="formValue.twitter.followers">
-            人
-          </template>
-        </n-statistic>
-      </n-card>
-      <n-card style="margin-bottom: 15px">
-        <n-log :log="log" />
-      </n-card>
+          </n-card>
+          <n-card title="测试结果" style="margin-bottom: 15px">
+            <n-statistic label="粉丝数">
+              {{ formValue.twitter.followers?formValue.twitter.followers:'未测试' }}
+              <template #suffix v-if="formValue.twitter.followers">
+                人
+              </template>
+            </n-statistic>
+            <n-log :log="log" style="max-height: 200px;margin-top: 10px;" />
+          </n-card>
+        </n-tab-pane>
+        <n-tab-pane name="Bilibili" tab="Bilibili">
+          开发中...
+        </n-tab-pane>
+      </n-tabs>
     </div>
   </div>
 </template>

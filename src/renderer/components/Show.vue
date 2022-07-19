@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onBeforeMount } from 'vue'
 import { darkTheme } from 'naive-ui'
-import { ArrowUp, Refresh } from '@vicons/ionicons5'
+import { ArrowUp, Refresh, Close } from '@vicons/ionicons5'
 import { useRoute } from 'vue-router'
 import axios from 'axios';
 
@@ -60,6 +60,10 @@ const updateData = () => {
   update()
 }
 
+const closeWin = () => {
+  ipcRenderer.invoke('window-close')
+}
+
 setInterval(updateData, parseInt(`${route.query.time}`) * 1000);
 
 console.log(route.query.isShowName)
@@ -71,11 +75,6 @@ console.log(route.query.isShowName)
     <n-config-provider :theme="darkTheme">
       <div>
         <div class="bar_box" style="-webkit-app-region: no-drag;">
-            <!-- <div class="move" >
-              <n-icon size="20">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" d="M176 112l80-80l80 80"></path><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" d="M255.98 32l.02 448"></path><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" d="M176 400l80 80l80-80"></path><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" d="M400 176l80 80l-80 80"></path><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" d="M112 176l-80 80l80 80"></path><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" d="M32 256h448"></path></svg>
-              </n-icon>
-            </div> -->
             <div></div>
             <div>
               <n-space>
@@ -84,9 +83,14 @@ console.log(route.query.isShowName)
                     <Refresh/>
                   </n-icon>
                 </n-button>
-                <n-button text style="font-size: 20px" ghost :color="isLock?'#18a058':'#767c82'" @click="lock">
+                <n-button text style="font-size: 20px" ghost :color="isLock?'#18a058':'rgba(194, 194, 194, 1)'" @click="lock">
                   <n-icon>
                     <ArrowUp/>
+                  </n-icon>
+                </n-button>
+                <n-button text style="font-size: 20px" ghost @click="closeWin">
+                  <n-icon>
+                    <Close/>
                   </n-icon>
                 </n-button>
               </n-space>

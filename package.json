@@ -1,6 +1,6 @@
 {
   "name": "watch_crab",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "./dist/electron/main/main.js",
   "author": "YuzeTT <yuzett@outlook.com>",
   "description": "一个监控各平台粉丝数量的桌面程序",
