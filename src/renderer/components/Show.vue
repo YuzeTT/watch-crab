@@ -2,8 +2,10 @@
 import { ref, onBeforeMount } from 'vue'
 import { darkTheme } from 'naive-ui'
 import { ArrowUp, Refresh } from '@vicons/ionicons5'
+import { useRoute } from 'vue-router'
 import axios from 'axios';
 
+const route = useRoute()
 const { ipcRenderer } = require('electron')
 // let win = require('electron').remote.getCurrentWindow()
 const isLock = ref(false)
@@ -11,7 +13,7 @@ const user = ref({
   id: '',
   name: '',
   avatar: '',
-  followers: 0,
+  followers: '',
 })
 
 const ifLock = () => {
@@ -34,19 +36,33 @@ const lock = () => {
 
 onBeforeMount(() => {
   ifLock()
+  // updateData()
+  update()
 })
 
 const update = () => {
-  axios.get(`http://mlmcounts.herokuapp.com/twitter/api/?name=chaci_YY`)
+  const url_1 = `https://api.socialcounts.org/twitter-live-follower-count/${route.query.id}`
+  const url_2 = `http://mlmcounts.herokuapp.com/twitter/api/?name=${route.query.id}`
+  axios.get(route.query.isShowName==='true'?url_2:url_1)
     .then(res => {
       console.log(res)
-      user.value.name = res.data.name
-      user.value.followers = res.data.followers_count
+      route.query.isShowName==='true'?user.value.name = res.data.name:user.value.name = '@ '+route.query.id
+      route.query.isShowName==='true'?user.value.followers = res.data.followers_count:user.value.followers = res.data.API_sub
     })
     .catch(err => {
       console.log(err)
+      user.value.name = '获取失败'
+      user.value.followers = 'Error'
     })
 }
+
+const updateData = () => {
+  update()
+}
+
+setInterval(updateData, parseInt(`${route.query.time}`) * 1000);
+
+console.log(route.query.isShowName)
 
 </script>
 

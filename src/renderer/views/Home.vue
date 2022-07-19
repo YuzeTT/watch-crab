@@ -18,6 +18,8 @@ const formValue = ref(
       name: 'Joe Biden',
       avatar: 'https://pbs.twimg.com/profile_images/839109349838982656/5QM0o_Ql_400x400.jpg',
       followers: null,
+      isShowName: false,
+      getTime: 5
     }
   }
 )
@@ -54,10 +56,10 @@ const open = () => {
   console.log('open')
   add_log(`ID: ${formValue.value.twitter.id} 打开浮窗`)
   let data = {
-    url: "/show",
+    url: `/show?type=twitter&id=${formValue.value.twitter.id}&isShowName=${formValue.value.twitter.isShowName}&time=${formValue.value.twitter.getTime}`,
     config: {
-      height: 200,
-      width: 300,
+      height: 150,
+      width: 350,
       transparent: true
     }
   };
@@ -73,7 +75,7 @@ const open = () => {
         <n-tabs default-value="Twitter" type="segment" animated>
           <n-tab-pane name="Twitter" tab="Twitter">
             <div style="display: flex;align-items: center;">
-              <n-tag :color="{ color: '#fff' }" :bordered="false" size="large" style="margin-right: 10px;">
+              <n-tag :color="{ color: '#fff' }" :bordered="false" size="large" style="min-width: 70px;margin-right: 10px;">
                 Twitter ID
               </n-tag>
               
@@ -81,6 +83,25 @@ const open = () => {
                 <n-input-group-label>@</n-input-group-label>
                 <n-input style="width: 100%;" v-model:value="formValue.twitter.id" type="text" placeholder="输入Twitter ID" />
               </n-input-group>
+            </div>
+            <div style="margin-top: 10px;display: flex;align-items: center;">
+              <n-tag :color="{ color: '#fff' }" :bordered="false" size="large" style="min-width: 70px;margin-right: 10px;">
+                请求延迟
+              </n-tag>
+              <n-input-number v-model:value="formValue.twitter.getTime" clearable placeholder="推荐 5~10 秒">
+                <template #suffix>
+                  秒
+                </template>
+              </n-input-number>
+            </div>
+            <div style="margin-top: 10px;">
+              <!-- <n-tag :color="{ color: '#fff' }" :bordered="false" size="large" style="margin-right: 10px;">
+                显示名称（需要连接VPN）
+              </n-tag>
+              <n-switch v-model:value="formValue.twitter.isShowName" /> -->
+              <n-checkbox v-model:checked="formValue.twitter.isShowName">
+                显示名称（需要连接VPN）
+              </n-checkbox>
             </div>
             <div style="margin-top: 10px;">
               <n-grid x-gap="12" :cols="4">
